@@ -1,9 +1,28 @@
-$(function(){
-	console.log('start');
-	main();
+//eventos jQuery
+$(function() {
+	//global vars
+	var board = new Board(800, 500);
+	var canvasId = $('#contenedor')[0];
+	var bar = new Bar(20, 150, 40, 150, board);
+	var bar = new Bar(700, 150, 40, 150, board);
+	var board_view = new BoardView(canvasId, board); 
+	board_view.draw();
+	//main();
+	$(document).ready(function () {
+		$(this).keydown(function (ev) {
+			ev.preventDefault();
+			//console.log(ev.keyCode);
+			if (ev.keyCode == 38 || ev.keyCode == 87) {
+				bar.up();
+			} else if (ev.keyCode == 40 || ev.keyCode == 83) {
+				bar.down();
+			}
+			console.log(bar.toString());
+		});
+	});
 });
-//manejo de objetos y mvc
 
+//manejo de objetos y mvc
 //funcion anonima de la clase tablero
 (function(){
 	//crear  objeto/clase y sus propiedades
@@ -17,10 +36,10 @@ $(function(){
 	};
 
 	self.Board.prototype = {
-		get elements(){
+		get elements() {
 			var elements = this.bars;
-			elements.push(ball);
-			return	elements;
+			elements.push(this.ball);
+			return elements;
 		}
 	};
 })();
@@ -34,12 +53,20 @@ $(function(){
 		this.height = height;
 		this.board = board;
 		this.board.bars.push(this);
-		this.kind = "rectangule";
+		this.kind = "rectangle";
+		this.speed = 10;
 	};
 
-	self.Board.prototype = {
-		down: function() {},
-		up: function() {},
+	self.Bar.prototype = {
+		down: function() {
+			this.y += this.speed;
+		},
+		up: function() {
+			this.y -= this.speed;
+		},
+		toString: function() {
+			return "x: "+this.x+" y: "+this.y;
+		},
 	};
 })();
 
@@ -52,14 +79,37 @@ $(function(){
 		this.canvas.height = board.height;
 		this.ctx = canvas.getContext("2d");
 	};
+
+	//modifica el objeto prototype
+	self.BoardView.prototype = {
+		draw: function() {
+			for (var i = this.board.elements.length - 1; i >= 0; i--) {
+				var el = this.board.elements[i];
+				drawElement(this.ctx, el);
+			}
+		},
+	};
+
+	//method to draw elements in canvas
+	function drawElement(ctx, element) {
+		if (element !== null && element.hasOwnProperty("kind")) {
+			switch(element.kind) {
+				case "rectangle":
+					ctx.fillRect(element.x, element.y, element.width, element.height);
+					break;
+			}	
+		}
+	}
 })();
 
-//metodo principal
+/*
 function main(){
-	var board = new Board(800, 400);
-	console.log(board);
-	var canvasId = $('#contenedor')[0];
-	console.log(canvasId);
-	var board_view = new BoardView(canvasId, board);
-	console.log(board_view);
-}
+	//llamar metodo draw del objeto de la clase BoarView
+	//board_view.draw();
+	//debuging 
+	//console.log(board);
+	//console.log(canvasId);
+	//console.log(bar);
+	//console.log(board_view);
+	
+}*/
