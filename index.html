@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Ping Pong</title>
+	<link rel="stylesheet" type="text/css" href="public/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="public/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" type="text/css" href="public/css/style.css">
+	<script type="text/javascript" src="public/js/plugins/jquery.min.js"></script>
+	<script type="text/javascript" src="public/js/plugins/bootstrap.min.js"></script>
+	<script type="text/javascript" src="public/js/script.js"></script>
+</head>
+<body>
+	<div class="container">
+		<header>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="page-header">
+						  <h1>Ping Pong Game <small>Model View Controller MVC-JS</small></h1>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<nav class="navbar navbar-inverse">
+			<div class="container">
+		    <div class="navbar-header">
+		      <a class="navbar-brand">Ping Pong</a>
+		    </div>
+		    <div>
+		      <ul class="nav navbar-nav">
+		        <li class="active"><a href="index.html">Inicio</a></li>
+		        <li><a href="#" data-toggle="modal" data-target="#aboutus">About</a></li>
+		      </ul>
+		    </div>
+  		</div>
+  		<div id="aboutus" class="modal fade" role="dialog">
+			  <div class="modal-dialog modal-lg">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal">&times;</button>
+			        <h4 class="modal-title">Acerca del Juego</h4>
+			      </div>
+			      <div class="modal-body">
+			        <p>Juego de ping pong usando javascript y MVC</p>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Salir</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		</nav>
+		<section>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h1>Ping Pong</h1>
+						<br>
+						<canvas id="contenedor">
+						</canvas>
+					</div>
+				</div>
+			</div>
+		</section>
+		<footer>
+			Develop: Juan Manuel Chaguendo
+			2015
+		</footer>
+	</div>
+</body>
+</html>
