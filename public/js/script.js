@@ -5,9 +5,14 @@ $(function() {
 	var canvasId = $('#contenedor')[0];
 	var bar = new Bar(20, 150, 40, 150, board);
 	var bar = new Bar(700, 150, 40, 150, board);
-	var board_view = new BoardView(canvasId, board); 
+	var board_view = new BoardView(canvasId, board);
+	//debuging 
+	//console.log(board);
+	//console.log(canvasId);
+	//console.log(bar);
+	//console.log(board_view); 
 	board_view.draw();
-	//main();
+
 	$(document).ready(function () {
 		$(this).keydown(function (ev) {
 			ev.preventDefault();
@@ -101,15 +106,3 @@ $(function() {
 		}
 	}
 })();
-
-/*
-function main(){
-	//llamar metodo draw del objeto de la clase BoarView
-	//board_view.draw();
-	//debuging 
-	//console.log(board);
-	//console.log(canvasId);
-	//console.log(bar);
-	//console.log(board_view);
-	
-}*/
