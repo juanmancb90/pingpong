@@ -1,35 +1,22 @@
-//eventos jQuery
-$(function() {
-	//global vars
-	var board = new Board(800, 500);
-	var canvasId = $('#contenedor')[0];
-	var bar = new Bar(20, 150, 40, 150, board);
-	var bar = new Bar(700, 150, 40, 150, board);
-	var board_view = new BoardView(canvasId, board);
-	//debuging 
-	//console.log(board);
-	//console.log(canvasId);
-	//console.log(bar);
-	//console.log(board_view); 
-	board_view.draw();
-
-	$(document).ready(function () {
-		$(this).keydown(function (ev) {
-			ev.preventDefault();
-			//console.log(ev.keyCode);
-			if (ev.keyCode == 38 || ev.keyCode == 87) {
-				bar.up();
-			} else if (ev.keyCode == 40 || ev.keyCode == 83) {
-				bar.down();
-			}
-			console.log(bar.toString());
-		});
+$(document).ready(function() { 
+	//$.extend(window,{});
+	//document.addEventListener("keydown", function (ev){
+	$(this).keydown(function (ev) {	
+		ev.preventDefault();
+		if (ev.keyCode == 38) {
+			bar.up();
+		} else if (ev.keyCode == 40) {
+			bar.down();
+		} else if (ev.keyCode == 87) {
+			bar_2.up();
+		} else if (ev.keyCode == 83) {
+			bar_2.down();
+		}
 	});
 });
-
 //manejo de objetos y mvc
 //funcion anonima de la clase tablero
-(function(){
+(function() {
 	//crear  objeto/clase y sus propiedades
 	self.Board = function(width, height) {
 		this.width = width;
@@ -43,14 +30,14 @@ $(function() {
 	self.Board.prototype = {
 		get elements() {
 			var elements = this.bars;
-			elements.push(this.ball);
+			//elements.push(this.ball);
 			return elements;
 		}
 	};
 })();
 
 //clase barras de desplazamiento
-(function(){
+(function() {
 	self.Bar = function(x, y, width, height, board) {
 		this.x = x;
 		this.y = y;
@@ -76,8 +63,8 @@ $(function() {
 })();
 
 //clase para dibujar el canvas
-(function(){
-	self.BoardView = function(canvas, board){
+(function() {
+	self.BoardView = function(canvas, board) {
 		this.canvas = canvas;
 		this.board = board;
 		this.canvas.width = board.width;
@@ -87,22 +74,42 @@ $(function() {
 
 	//modifica el objeto prototype
 	self.BoardView.prototype = {
+		clean: function() {
+			this.ctx.clearRect(0, 0, this.board.width, this.board.height);
+		},
 		draw: function() {
 			for (var i = this.board.elements.length - 1; i >= 0; i--) {
 				var el = this.board.elements[i];
 				drawElement(this.ctx, el);
 			}
-		},
+		}
 	};
 
 	//method to draw elements in canvas
 	function drawElement(ctx, element) {
-		if (element !== null && element.hasOwnProperty("kind")) {
-			switch(element.kind) {
-				case "rectangle":
-					ctx.fillRect(element.x, element.y, element.width, element.height);
-					break;
-			}	
-		}
+		//if (element !== null && element.hasOwnProperty("kind")) {
+		switch(element.kind) {
+			case "rectangle":
+				ctx.fillRect(element.x, element.y, element.width, element.height);
+				break;
+		}	
+		//}
 	}
 })();
+
+//global vars
+//const state = false;
+var board = new Board(800, 500);
+var bar = new Bar(20, 150, 40, 150, board);
+var bar_2 = new Bar(700, 150, 40, 150, board);
+var canvas_Id = $('#canvas')[0];
+var board_view = new BoardView(canvas_Id, board);
+
+//self.addEventListener("load", controller);
+window.requestAnimationFrame(controller);
+
+function controller(){
+	board_view.clean();
+	board_view.draw();
+	window.requestAnimationFrame(controller);
+}
